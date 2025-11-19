@@ -10,7 +10,7 @@ const app = express();
 const port = process.env.PORT || 4000;
 connectDB();
 
-const allowedOrigins = ['http://localhost:5173', 'https://iyyappan-mern-auth.netlify.app/']
+const allowedOrigins = ['http://localhost:5173', 'https://iyyappan-mern-auth.netlify.app']
 
 const corsOptions = {
   origin: function(origin, callback) {
@@ -25,10 +25,10 @@ const corsOptions = {
 };
 
 
-
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors(corsOptions));
+
 
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
