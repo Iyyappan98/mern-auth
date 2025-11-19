@@ -12,12 +12,24 @@ connectDB();
 
 const allowedOrigins = ['http://localhost:5173', 'https://iyyappan-mern-auth.netlify.app']
 
+const corsOptions = {
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+};
+
 
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({origin: allowedOrigins, credentials: true}));
-app.options('*', cors({ origin: true, credentials: true }));
+app.use(cors(corsOptions));
+
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 
